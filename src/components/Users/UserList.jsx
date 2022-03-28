@@ -2,30 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const UserList = () => {
-  //TODO:Kullanıcılar Backend'den Çekilecek
-
-  /*const data = [
-    {
-      name: "Ahmet",
-      surname: "Yılmaz",
-      email: "asd@gmail.com",
-      phone: "+90 532 123 45 67",
-      imageURL:
-        "https://firebasestorage.googleapis.com/v0/b/randevum-5d873.appspot.com/o/dashboardUser.png?alt=media&token=f4349db5-cf6d-4cfa-91fb-a56ceb42b01f",
-    },
-    {
-      name: "Ahmet",
-      surname: "Yılmaz",
-      email: "asd@gmail.com",
-      phone: "+90 532 123 45 67",
-      imageURL:
-        "https://firebasestorage.googleapis.com/v0/b/randevum-5d873.appspot.com/o/dashboardUser.png?alt=media&token=f4349db5-cf6d-4cfa-91fb-a56ceb42b01f",
-    },
-  ];*/
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/user`)
       .then((res) => {
@@ -34,7 +17,13 @@ const UserList = () => {
       .catch((err) => {
         alert(err.response);
       });
-  }, []);
+  };
+
+  const handleDelete = (id) => {
+    axios.delete(`${process.env.REACT_APP_API_URL}/user/${id}`).then((res) => {
+      getUserData();
+    });
+  };
 
   return (
     <div className="my-8">
@@ -60,7 +49,10 @@ const UserList = () => {
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr className="cursor-pointer transition-colors duration-300 bg-boxColor font-semibold">
+            <tr
+              key={index}
+              className="cursor-pointer transition-colors duration-300 bg-boxColor font-semibold"
+            >
               <th
                 scope="row"
                 className="px-6 py-4 font-medium whitespace-nowrap"
@@ -82,7 +74,10 @@ const UserList = () => {
               <td className="px-6 py-4">{item.userEmail}</td>
               <td className="px-6 py-4">{item.userPhone}</td>
               <td className="px-6 py-4 text-right">
-                <button className="font-bold transition-colors duration-300 hover:text-borderAndOtherRed">
+                <button
+                  onClick={() => handleDelete(item._id)}
+                  className="font-bold transition-colors duration-300 hover:text-borderAndOtherRed"
+                >
                   Delete
                 </button>
               </td>

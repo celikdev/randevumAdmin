@@ -16,3 +16,8 @@ body {
     @apply h-full bg-background;
   }
 }
+
+.deneme {
+  width: 10px;
+  height: 10px;
+}

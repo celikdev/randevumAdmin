@@ -1,8 +1,17 @@
 import React from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 const LeftBar = () => {
   const navigate = useNavigate();
+
+  const [cookies, setCookie, removeCookie] = useCookies(["loggedIn"]);
+
+  const handleLogout = () => {
+    removeCookie("loggedIn");
+    navigate("/");
+  };
+
   return (
     <div className="bg-boxColor h-screen w-72 gap-16 rounded-r-2xl shadow-xl flex flex-col items-center py-10">
       <img
@@ -28,6 +37,12 @@ const LeftBar = () => {
           </h1>
         </button>
       </div>
+      <button
+        onClick={() => handleLogout()}
+        className="w-8/12 bg-borderAndOtherRed py-2 rounded transition-colors duration-300 hover:bg-textColor hover:text-borderAndOtherRed  text-sm font-Montserrat font-semibold text-textColor"
+      >
+        Çıkış Yap
+      </button>
     </div>
   );
 };
