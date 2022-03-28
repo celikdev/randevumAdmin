@@ -4,6 +4,7 @@ import { route } from "./Routes";
 import { NotFoundPage } from "./screens";
 
 const App = () => {
+  //TODO:MOBİLE NOTİFİCATİON CREATOR YAPILACAK
   return (
     <Routes>
       {route.map((route, index) => {
